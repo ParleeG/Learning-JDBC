@@ -9,10 +9,21 @@ public class JDBCExecutor {
         try{
             Connection connection=dcm.getConnection();
             CustomerDAO customerDAO=new CustomerDAO(connection);
-            Customer customer=customerDAO.findById(10000);
-            System.out.println(customer.getFirstName()+" "+customer.getLastName());
-            customer=customerDAO.update(customer);
-            System.out.println(customer.getFirstName()+" "+customer.getLastName());
+            Customer customer=new Customer();
+            customer.setFirstName("John");
+            customer.setLastName("Adams");
+            customer.setEmail("jadams.wh.gov");
+            customer.setAddress("1234 Main St");
+            customer.setCity("Arlington");
+            customer.setState("VA");
+            customer.setPhone("(555) 555-9845");
+            customer.setZipCode("01234");
+            Customer dbcustomer=customerDAO.create(customer);
+            System.out.println(dbcustomer);
+            dbcustomer.setEmail("john.adams@wh.gov");
+            dbcustomer=customerDAO.update(dbcustomer);
+            System.out.println(dbcustomer);
+            customerDAO.delete(dbcustomer.getId());
         }catch(SQLException e){
             e.printStackTrace();
         }
